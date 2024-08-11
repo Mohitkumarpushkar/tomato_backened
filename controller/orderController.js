@@ -4,12 +4,12 @@ import Stripe from 'stripe';
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log("Stripe Secret Key:", process.env.STRIPE_SECRET_KEY);  // Debugging line
+ // Debugging line
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
     // frontend url
-    const frontend_url = "http://localhost:5173";
+   
 
     try {
         const newOrder = new orderModel({
