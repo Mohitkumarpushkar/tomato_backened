@@ -3,13 +3,13 @@ import userModel from "../models/userModel.js";
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 dotenv.config();
-var STRIPE_SECRET_KEY="sk_test_51Pedqv2LLnObwWXQyVeDpFeSrawkEaS5xwgh7i4UZkuOl5g4pWv2YfknURQp1opOyL8BzorM3SMPXqfEtumzlOth00RKMgQLQH";
+
  // Debugging line
-const stripe = new Stripe(STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
     // frontend url
-    const frontend_url = "http://localhost:5173";
+   
 
     try {
         const newOrder = new orderModel({
@@ -50,8 +50,8 @@ const placeOrder = async (req, res) => {
             const session = await stripe.checkout.sessions.create({
                 line_items: line_items,
                 mode: "payment",
-                success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-                cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`
+                success_url: `${process.env.frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+                cancel_url: `${process.env.frontend_url}/verify?success=false&orderId=${newOrder._id}`
             });
 
             console.log("Stripe session created successfully:", session);
