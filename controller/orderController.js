@@ -3,9 +3,9 @@ import userModel from "../models/userModel.js";
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 dotenv.config();
-
-console.log("Stripe Secret Key:", process.env.STRIPE_SECRET_KEY);  // Debugging line
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+var STRIPE_SECRET_KEY="sk_test_51Pedqv2LLnObwWXQyVeDpFeSrawkEaS5xwgh7i4UZkuOl5g4pWv2YfknURQp1opOyL8BzorM3SMPXqfEtumzlOth00RKMgQLQH";
+ // Debugging line
+const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
     // frontend url
