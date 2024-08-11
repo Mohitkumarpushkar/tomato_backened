@@ -45,22 +45,19 @@ const placeOrder = async (req, res) => {
 
         console.log("Creating Stripe session with line items:", line_items);
 
-        try {
+        
       
             const session = await stripe.checkout.sessions.create({
                 line_items: line_items,
                 mode: "payment",
-                success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-                cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`
+                success_url: `${process.env.frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+                cancel_url: `${process.env.frontend_url}/verify?success=false&orderId=${newOrder._id}`
             });
 
             console.log("Stripe session created successfully:", session);
 
             res.json({ success: true, session_url: session.url });
-        } catch (stripeError) {
-            console.error("Error creating Stripe session:", stripeError);
-            res.json({ success: false, message: "Error creating payment session" });
-        }
+        
 
     } catch (error) {
         console.error("Error placing order:", error);
@@ -69,7 +66,7 @@ const placeOrder = async (req, res) => {
 };
 
 
-const verifyOrder= async ()=>{
+const verifyOrder= async (req,res)=>{
     const {orderId,success}=req.body;
     try{
         if(success==="true"){
